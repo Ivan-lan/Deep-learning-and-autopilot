@@ -13,7 +13,7 @@
 - test.py  >>> Test the model
 - plot.py >>> Plot the loss and accuracy of training history
 
-To be continued…… ：）
+After 20 epoches training，model_conv6_dens2  achieve accuracy : 97.6%. 
 
 #### Data
 

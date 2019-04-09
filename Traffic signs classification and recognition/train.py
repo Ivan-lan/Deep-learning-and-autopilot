@@ -13,6 +13,7 @@ from setting import *
 from model_LeNet_5 import LeNet_5
 from model_conv6_dens2 import model_conv6_dens2
 from model_conv7 import model
+
 from plot import plot_loss_acc
 from data_augment import data_aug
 
@@ -23,9 +24,9 @@ X, Y = train_data_read_transform()
 #model = LeNet_5()
 model = model_conv6_dens2()
 
-
 def lr_schedule(epoch):
     return LR * (0.1 ** int(epoch / 10))
+
 
 def train():
 	# 训练配置
@@ -44,7 +45,7 @@ def train():
 						ModelCheckpoint(MODEL, save_best_only=True)]
 			)
 	plot_loss_acc(history)
-	return mode
+	return model
 
 def train_with_data_aug():
 	# 数据增强后训练模型

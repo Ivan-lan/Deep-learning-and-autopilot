@@ -14,15 +14,14 @@ from keras import backend as K
 
 from setting import *
 
-K.set_image_data_format('channels_first')
-
+# K.set_image_data_format('channels_first')
 
 def LeNet_5():
 
     model = Sequential()
     # 输入为48*48 
     model.add(Conv2D(6, (5, 5), padding='valid',
-                     input_shape=(3, IMG_SIZE, IMG_SIZE),
+                     input_shape=(IMG_SIZE, IMG_SIZE, 3),
                      activation='relu')) # 48-5+1=44  44*44*6
     model.add(MaxPooling2D(pool_size=(2, 2))) # 22*22*6
 

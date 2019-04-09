@@ -1,3 +1,7 @@
+"""
+h绘制训练过程的训练损失和准确度曲线
+"""
+
 from matplotlib import pyplot as plt
 
 plt.rcParams['figure.figsize'] = (10.0, 8.0) # set default size of plots
@@ -25,3 +29,4 @@ def plot_loss_acc(history):
 	plt.xlabel('epoch')
 	plt.legend(['train_acc', 'val_acc'], loc='lower right')
 	plt.savefig("Train_Valid_acc.png")
+

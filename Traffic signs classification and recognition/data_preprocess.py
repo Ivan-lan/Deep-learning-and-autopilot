@@ -1,6 +1,5 @@
 """
 数据预处理
-
 """
 
 import numpy as np
@@ -30,13 +29,13 @@ def preprocess_img(img):
               :]
     # 调整图像大小
     img = transform.resize(img, (IMG_SIZE, IMG_SIZE))
-    # roll color axis to axis 0
-    img = np.rollaxis(img, -1) # 改变颜色通道的位置，适应theano
+    # roll color axis to axis 0 (tensorflow不用)
+    # img = np.rollaxis(img, -1) # 改变颜色通道的位置，适应theano
     return img
 
 # 获取类别标签
 def get_class(img_path):
-    return int(img_path.split('\\')[-2])
+    return int(img_path.split('\\')[-2]) # 文件夹名为类别
 
 # 读取训练集数据并转换数据
 def train_data_read_transform():
@@ -58,21 +57,19 @@ def train_data_read_transform():
 		np.random.shuffle(all_img_paths)
 		for img_path in all_img_paths:
 			try:
-				img = preprocess_img(io.imread(img_path))  
+				img = preprocess_img(io.imread(img_path))  # 读取图片
             	# io.imread 读入的数据是 uint8
 				label = get_class(img_path)
 				imgs.append(img)
 				labels.append(label)
-
 				if len(imgs)%1000 == 0: print("Processed {}/{}".format(len(imgs), len(all_img_paths)))
 			except (IOError, OSError):
 				print('missed', img_path)
 				pass
-
+		# 转为数组
 		X = np.array(imgs, dtype='float32')
-		Y = np.eye(NUM_CLASSES, dtype='uint8')[labels]
-
-    	# Y = ***[labels] 生成one-hot编码的方式
+		Y = np.eye(NUM_CLASSES, dtype='uint8')[labels] # 对类别整数转为one-hot编码
+		# 持久化
 		with h5py.File(X_H5,'w') as hf:
 			hf.create_dataset('imgs', data=X)
 			hf.create_dataset('labels', data=Y)
@@ -110,6 +107,6 @@ def test_data_read_transform():
 
 if __name__ == "__main__":
 
-	X_train,Y_train = train_data_read_transform()
-	X_test, Y_test = test_data_read_transform()
+	train_data_read_transform()
+	test_data_read_transform()
 
